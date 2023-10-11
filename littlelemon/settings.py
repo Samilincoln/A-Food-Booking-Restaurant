@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 from decouple import config 
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['Render web']
 
 
 # Application definition
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # The settings for app updated for the Graded assessment
     'restaurant',
+    'dj_database_url',
 ]
 
 MIDDLEWARE = [
@@ -77,11 +79,13 @@ WSGI_APPLICATION = 'littlelemon.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
+
+import dj_database_url 
+import os
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": dj_database_url.parse(os.environ.get("postgres://littlelemondb_user:vBO1rmEbqaomIaHbD2YQoR2shSDISDIt@dpg-ckd175ect0pc73cgv3og-a.oregon-postgres.render.com/littlelemondb"), conn_max_age=600)
 }
 
 # The settings for media files have been updated for the Graded assessment
